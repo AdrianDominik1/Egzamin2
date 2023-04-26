@@ -62,7 +62,7 @@
             </tr>
             <?php
                 require("connect.php");
-                $qr="SELECT id, informacja, wart_min FROM bmi";
+                $qr="SELECT id, informacja, wart_min FROM bmi"; 
                 $result = $conn->query($qr);
                 while($r = $result->fetch_array())
                 {
@@ -72,7 +72,8 @@
         </table>
     </div>
     <div class="stopka">
-        Autor: adi mati i alan
+        Autorzy: Mati Adi Alan
+        <a href="kw2.jpg">Wynik działania kwerendy 2</a>
     </div>
 </body>
 </html>
