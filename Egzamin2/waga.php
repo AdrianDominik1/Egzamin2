@@ -23,49 +23,57 @@
             <input type="submit" value="Licz BMI i zapisz wynik">
         </form>
         <?php
-            $polonczenie=mysqli_connect("localhost","admin","admin1234","egzamin");
+            require("connect.php");
             if(!empty($_POST['Waga']) && !empty($_POST['wzrost']))
-            {    $Waga = $_POST['Waga'];
-                $wzrost = $_POST['wzrost'];
-                $data = $_POST['data'];
-                $bmi = $_POST['bmi'];
+            {
+                $Waga= $_POST['Waga'];
+                $wzrost= $_POST['wzrost'];
+                $data = date('Y-m-d');
+                $bmi=$Waga/($wzrost*$wzrost)*10000;
                 echo "twoja waga: ".$Waga."; Twój wzrost: ".$wzrost."<br> BMI wynosi: ". $bmi;
                 if($bmi <=18)
                 {
                     $i = 1;
                 }
-                else if ($bmi <=25 && $bmi >= 19)
+                else if($bmi <=25 && $bmi >= 19)
                 {
-                    $i =2;
+                    $i = 2;
                 }
-                else if ($bmi <=30 && $bmi >= 26)
+                else if($bmi <=30 && $bmi >= 26)
                 {
-                     $i = 3;
-                 }
-                else if ($bmi >= 31)
-                { 
-                    $i = 4; 
+                    $i = 3;
                 }
-                mysqli_query($polonczenie,"INSERT INTO wynik(bmi_id, data_pomiaru, wynik) VALUES ('$i','$data','$bmi')");
+                else if($bmi >= 31)
+                {
+                    $i = 4;
+                }  
+                $qr="INSERT INTO wynik(bmi_id, data_pomiaru, wynik) VALUES ('$i','$data','$bmi')";
+                $conn->query($qr);
             }
+            mysqli_close($conn);
         ?>
     </div>
     <div class="glowny">
         <table>
             <tr>
+                <th>Lp.</th>
+                <th>Interpretacja</th>
+                <th>Zaczyna się od...</th>
+            </tr>
             <?php
-                    $zapytanie = mysqli_query($polonczenie,"SELECT id, informacja, wart_min FROM bmi");
-                    while($r = mysqli_fetch_array($zapytanie))
-                    {
-                        echo "<tr><td>".$r[0]."</td><td>".$r[1]."</td><td>".$r[2]."</td></tr>";
-                    }
-                ?>
-                </table>
-                </div>
-                <div class="stoka">
-                Autor: 0123456789
-            <a href="kw2.jpg">Wynik działania kwerendy 2</a>
-        </div>
-    </body>
-    </html>
-           
+                require("connect.php");
+                $qr="SELECT id, informacja, wart_min FROM bmi";
+                $result = $conn->query($qr);
+                while($r = $result->fetch_array())
+                {
+                    echo "<tr><td>".$r[0]."</td><td>".$r[1]."</td><td>".$r[2]."</td></tr>";
+                }
+            ?>
+        </table>
+    </div>
+    <div class="stopka">
+        Autor: 0123456789
+        <a href="kw2.jpg">Wynik działania kwerendy 2</a>
+    </div>
+</body>
+</html>
