@@ -31,15 +31,15 @@
                 $data = date('Y-m-d');
                 $bmi=$Waga/($wzrost*$wzrost)*10000;
                 echo "twoja waga: ".$Waga."; Twój wzrost: ".$wzrost."<br> BMI wynosi: ". $bmi;
-                if($bmi <=18)
+                if($bmi <=18.99)
                 {
                     $i = 1;
                 }
-                else if($bmi <=25 && $bmi >= 19)
+                else if($bmi <=25.99 && $bmi >= 19)
                 {
                     $i = 2;
                 }
-                else if($bmi <=30 && $bmi >= 26)
+                else if($bmi <=30.99 && $bmi >= 26)
                 {
                     $i = 3;
                 }
